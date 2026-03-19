@@ -1,0 +1,7 @@
+#!/usr/bin/sh
+
+USER="mark"
+
+if who | grep -q "^$USER "; then
+  pkill -u "$USER" -RTMIN+2 slstatus
+fi

@@ -3,7 +3,7 @@
 .POSIX:
 
 include config.mk
-CC = clang
+CC = gcc
 REQ = util
 COM =\
 	components/alsa_master_vol\
