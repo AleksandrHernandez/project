@@ -1,1 +1,0 @@
-SUBSYSTEM=="pci", ATTR{power/control}="on", ATTR{power/control}="auto"
