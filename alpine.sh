@@ -1,8 +1,9 @@
 #!/bin/sh
+set -eu
 
 doas setup-devd udev
 
-doas apk add make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-mono-nerd
+doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-mono-nerd
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
 cp -r ./config/.profile $HOME/.profile
@@ -29,6 +30,7 @@ if ls /sys/class/power_supply/BAT* >/dev/null 2>&1; then
 	doas cp -r ./config/tlp/sysctl.conf /etc/sysctl.conf
 	doas cp -r ./config/tlp/99-pci-power.rules /etc/udev/rules.d/99-pci-power.rules
 	doas cp -r ./config/tlp/99-slstatus-battery.rules /etc/udev/rules.d/99-slstatus-battery.rules
+	sed -i "s/USER=\"user\"/USER=\"$USER\"/" ./config/slstatus/slstatus-battery
 	doas cp -r ./config/tlp/slstatus-battery /usr/local/bin/slstatus-battery
 else
 	cp -r ./config/slstatus/config.def.h ./config/slstatus/slstatus/config.def.h
@@ -62,3 +64,7 @@ doas apk add nftables
 doas cp -r ./config/nftables/nftables.nft /etc/nftables.nft
 doas rc-service nftables start
 doas rc-update add nftables boot
+
+doas apk add agetty
+doas sed -i "s|tty1::respawn:/sbin/getty 38400 tty1|tty1::respawn:/sbin/agetty --autologin $USER tty1 linux|" /etc/inittab
+doas sed -i "s|ttyS0::respawn:/sbin/getty -L 0 ttyS0 vt100|ttyS0::respawn:/sbin/agetty --autologin $USER ttyS0 vt100|" /etc/inittab
