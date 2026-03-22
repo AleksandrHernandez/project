@@ -2,45 +2,43 @@
 
 doas setup-devd udev
 
-doas apk add make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-code-nerd
+doas apk add make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-mono-nerd
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
-cp -r ./.profile $HOME/.profile
+cp -r ./config/.profile $HOME/.profile
 mkdir -p $HOME/.config
 
 doas addgroup $USER seat
 doas rc-update add seatd
 doas rc-service seatd start
 
-cd dwl
+cd ./config/dwl
 make
 doas make clean install
-cd ..
-cp -r dwl $HOME/.config/
+cd -
+cp -r ./config/dwl $HOME/.config/
 
-mkdir -p $HOME/.wallpapers
-cp -r wallpaper.jpeg $HOME/.wallpapers/
-mkdir -p $HOME/.config/foot
-cp -r foot.ini $HOME/.config/foot/
+cp -r ./config/.wallpaper $HOME/
+cp -r ./config/foot $HOME/.config/
 
 if ls /sys/class/power_supply/BAT* >/dev/null 2>&1; then
 	doas apk add tlp tlp-rdw ethtool smartmontools powertop
 	doas rc-update add tlp
 	doas rc-service tlp start
-	doas cp -r ./tlp/tlp.conf /etc/tlp.conf
-	doas cp -r ./tlp/sysctl.conf /etc/sysctl.conf
-	doas cp -r ./tlp/99-pci-power.rules /etc/udev/rules.d/99-pci-power.rules
-	doas cp -r ./tlp/99-slstatus-battery.rules /etc/udev/rules.d/99-slstatus-battery.rules
-	doas cp -r slstatus-battery /usr/local/bin/slstatus-battery
+	doas cp -r ./config/tlp/tlp.conf /etc/tlp.conf
+	doas cp -r ./config/tlp/sysctl.conf /etc/sysctl.conf
+	doas cp -r ./config/tlp/99-pci-power.rules /etc/udev/rules.d/99-pci-power.rules
+	doas cp -r ./config/tlp/99-slstatus-battery.rules /etc/udev/rules.d/99-slstatus-battery.rules
+	doas cp -r ./config/tlp/slstatus-battery /usr/local/bin/slstatus-battery
 else
-	cp -r config.def.h slstatus/config.def.h
+	cp -r ./config/slstatus/config.def.h ./config/slstatus/slstatus/config.def.h
 fi
 
-cd slstatus
+cd ./config/slstatus/slstatus
 make
 doas make clean install
-cd ..
-cp -r slstatus $HOME/.config/
+cd -
+cp -r ./config/slstatus/slstatus $HOME/.config/
 
 doas apk add dbus
 doas rc-update add dbus
@@ -55,7 +53,12 @@ rc-service -U wireplumber start
 rc-service -U pipewire-pulse start
 
 doas apk add zram-init
-doas cp -r ./zram/zram-init /etc/conf.d/zram-init
-doas cp -r ./zram/99-zram.conf /etc/sysctl.d/99-zram.conf
+doas cp -r ./config/zram/zram-init /etc/conf.d/zram-init
+doas cp -r ./config/zram/99-zram.conf /etc/sysctl.d/99-zram.conf
 doas rc-update add zram-init
 doas rc-service zram-init start
+
+doas apk add nftables
+doas cp -r ./config/nftables/nftables.nft /etc/nftables.nft
+doas rc-service nftables start
+doas rc-update add nftables boot
