@@ -5,6 +5,12 @@ doas setup-devd udev
 doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-mono-nerd
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+	XDG_RUNTIME_DIR="/tmp/$(id -u)-runtime-dir"
+
+	mkdir -pm 0700 "$XDG_RUNTIME_DIR"
+	export XDG_RUNTIME_DIR
+fi
 cp -r ./config/.profile $HOME/.profile
 mkdir -p $HOME/.config/rc/runlevels/gui
 
@@ -47,7 +53,6 @@ doas rc-update add dbus
 doas rc-service dbus start
 
 doas apk add alsa-utils pipewire wireplumber pipewire-pulse pipewire-alsa xdg-desktop-portal-wlr rtkit
-sleep 1
 rc-update -U add pipewire gui
 rc-update -U add wireplumber gui
 rc-update -U add pipewire-pulse gui
