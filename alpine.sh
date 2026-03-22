@@ -1,5 +1,4 @@
 #!/bin/sh
-set -eu
 
 doas setup-devd udev
 
@@ -32,10 +31,11 @@ if ls /sys/class/power_supply/BAT* >/dev/null 2>&1; then
 	doas cp -r ./config/tlp/99-slstatus-battery.rules /etc/udev/rules.d/99-slstatus-battery.rules
 	sed -i "s/USER=\"user\"/USER=\"$USER\"/" ./config/slstatus/slstatus-battery
 	doas cp -r ./config/tlp/slstatus-battery /usr/local/bin/slstatus-battery
+	cp -r ./config/slstatus/bat/config.def.h ./config/slstatus/slstatus/config.def.h
 else
-	cp -r ./config/slstatus/config.def.h ./config/slstatus/slstatus/config.def.h
+	cp -r ./config/slstatus/nobat/config.def.h ./config/slstatus/slstatus/config.def.h
 fi
-sleep 2
+
 cd ./config/slstatus/slstatus
 make
 doas make clean install
@@ -46,7 +46,8 @@ doas apk add dbus
 doas rc-update add dbus
 doas rc-service dbus start
 
-doas apk add alsa-utils pipewire wireplumber pipewire-pulse pipewire-alsa xdg-desktop-portal-wlr
+doas apk add alsa-utils pipewire wireplumber pipewire-pulse pipewire-alsa xdg-desktop-portal-wlr rtkit
+sleep 1
 rc-update -U add pipewire gui
 rc-update -U add wireplumber gui
 rc-update -U add pipewire-pulse gui
