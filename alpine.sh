@@ -7,7 +7,7 @@ doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon way
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
 cp -r ./config/.profile $HOME/.profile
-mkdir -p $HOME/.config
+mkdir -p $HOME/.config/rc/runlevels/gui
 
 doas addgroup $USER seat
 doas rc-update add seatd
@@ -35,7 +35,7 @@ if ls /sys/class/power_supply/BAT* >/dev/null 2>&1; then
 else
 	cp -r ./config/slstatus/config.def.h ./config/slstatus/slstatus/config.def.h
 fi
-
+sleep 2
 cd ./config/slstatus/slstatus
 make
 doas make clean install
