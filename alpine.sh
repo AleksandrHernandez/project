@@ -68,3 +68,6 @@ doas rc-update add nftables boot
 doas apk add agetty
 doas sed -i "s|tty1::respawn:/sbin/getty 38400 tty1|tty1::respawn:/sbin/agetty --autologin $USER tty1 linux|" /etc/inittab
 doas sed -i "s|ttyS0::respawn:/sbin/getty -L 0 ttyS0 vt100|ttyS0::respawn:/sbin/agetty --autologin $USER ttyS0 vt100|" /etc/inittab
+
+doas cp -r ./config/doas/99-power.conf /etc/doas.d/99-power.conf
+doas doas -C /etc/doas.conf

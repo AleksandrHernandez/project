@@ -25,6 +25,11 @@ static const char  kblayout_file[] = "/tmp/dwl-keymap";
 static const char *kblayout_cmd[]  = {"pkill", "-RTMIN+3", "slstatus", NULL};
 static const char *kblayouts[] = {"us", "ru"};
 
+/* volume change notification for status bar */
+static const char *volupcmd[]   = { "sh", "-c", "amixer -q -D pipewire sset Master 5%+ && pkill -RTMIN+1 slstatus", NULL };
+static const char *voldowncmd[] = { "sh", "-c", "amixer -q -D pipewire sset Master 5%- && pkill -RTMIN+1 slstatus", NULL };
+static const char *volmutecmd[] = { "sh", "-c", "amixer -q -D pipewire sset Master toggle && pkill -RTMIN+1 slstatus", NULL };
+
 /* tagging */
 static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -140,6 +145,9 @@ static const Key keys[] = {
 	{ MODKEY,                    XKB_KEY_p,          spawn,          {.v = menucmd} },
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Return,     spawn,          {.v = termcmd} },
 	{ MODKEY,                    XKB_KEY_b,          togglebar,      {0} },
+	{ 0,                         XKB_KEY_XF86AudioRaiseVolume, spawn, {.v = volupcmd} },
+	{ 0,                         XKB_KEY_XF86AudioLowerVolume, spawn, {.v = voldowncmd} },
+	{ 0,                         XKB_KEY_XF86AudioMute, spawn, {.v = volmutecmd} },
 	{ MODKEY,                    XKB_KEY_j,          focusstack,     {.i = +1} },
 	{ MODKEY,                    XKB_KEY_k,          focusstack,     {.i = -1} },
 	{ MODKEY,                    XKB_KEY_i,          incnmaster,     {.i = +1} },
