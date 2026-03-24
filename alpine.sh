@@ -2,7 +2,7 @@
 
 doas setup-devd udev
 
-doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-fira-mono-nerd
+doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-jetbrains-mono-nerd
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
 if [ -z "$XDG_RUNTIME_DIR" ]; then
@@ -77,3 +77,16 @@ doas sed -i "s|ttyS0::respawn:/sbin/getty -L 0 ttyS0 vt100|ttyS0::respawn:/sbin/
 
 doas cp -r ./config/doas/99-power.conf /etc/doas.d/99-power.conf
 doas doas -C /etc/doas.conf
+doas cp -r ./script/poweroff.desktop /usr/share/applications/poweroff.desktop
+doas cp -r ./script/reboot.desktop /usr/share/applications/reboot.desktop
+
+doas apk add flatpak
+flatpak remote-add --user --subset=verified flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install --user -y flathub io.gitlab.librewolf-community
+mkdir -p $HOME/loads
+flatpak override --user --filesystem="$HOME/loads" io.gitlab.librewolf-community
+
+doas apk add grim imv ranger file
+mkdir -p $HOME/screen
+doas cp -r ./script/grim.desktop /usr/share/applications/grim.desktop
+cp -r ./config/kak $HOME/.config/

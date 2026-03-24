@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=PowerOff
+Terminal=false
+Exec=doas /sbin/poweroff

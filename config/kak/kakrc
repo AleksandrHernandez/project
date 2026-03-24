@@ -1,0 +1,13 @@
+colorscheme gruvbox-dark
+set-face global Default default,default
+set-face global BufferPadding default,default
+set-face global LineNumbers default,default
+add-highlighter global/number-lines number-lines -relative
+
+#set-option global ui_options ncurses_assistant=none
+
+#eval %sh{kak-lsp --kakoune -s $kak_session}
+#hook global WinSetOption filetype=(python|sh) %{
+#    lsp-enable-window
+#    set-option window lsp_auto_show_code_actions true
+#}

@@ -1,3 +1,4 @@
+export EDITOR='kak'
 # Creating XDG_RUNTIME_DIR
 if [ -z "$XDG_RUNTIME_DIR" ]; then
 	XDG_RUNTIME_DIR="/tmp/$(id -u)-runtime-dir"
@@ -11,5 +12,5 @@ if [ "$(tty)" = "/dev/tty1" ]; then
 	openrc -U gui
 	export XDG_CURRENT_DESKTOP=wlroots
 	export XDG_SESSION_TYPE=wayland
-	slstatus -s | exec dbus-run-session dwl -s "swaybg -i $HOME/.wallpaper/wallpaper.jpeg &"
+	slstatus -s | exec dbus-run-session dwl -s "swaybg -i $HOME/.wallpaper/wallpaper.jpg &"
 fi

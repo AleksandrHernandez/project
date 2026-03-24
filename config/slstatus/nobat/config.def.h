@@ -68,7 +68,7 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
 	/* function format          argument turn signal */
 //  { battery_perc, "POWER:%s%% | ", "BAT1", 0, 2 },
-  { cat, "%s | ", "/tmp/dwl-keymap", 0, 3 },
+  { cat, " | %s | ", "/tmp/dwl-keymap", 0, 3 },
   { alsa_master_vol, "%s | ", NULL, 0, 1 },
   { datetime, "%s", "%F %T", 1, -1 },
 };
