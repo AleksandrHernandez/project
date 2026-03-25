@@ -82,7 +82,7 @@ doas cp -r ./script/reboot.desktop /usr/share/applications/reboot.desktop
 
 doas apk del .dev
 
-doas apk add grim imv ranger file
+doas apk add grim imv mpv ranger file
 mkdir -p $HOME/screen
 mkdir -p $HOME/.local/script
 cp -r ./script/grim.sh $HOME/.local/script/grim.sh
