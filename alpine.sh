@@ -80,11 +80,7 @@ doas doas -C /etc/doas.conf
 doas cp -r ./script/poweroff.desktop /usr/share/applications/poweroff.desktop
 doas cp -r ./script/reboot.desktop /usr/share/applications/reboot.desktop
 
-doas apk add flatpak
-flatpak remote-add --user --subset=verified flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user -y flathub io.gitlab.librewolf-community
-mkdir -p $HOME/loads
-flatpak override --user --filesystem="$HOME/loads" io.gitlab.librewolf-community
+doas apk del .dev
 
 doas apk add grim imv ranger file
 mkdir -p $HOME/screen
@@ -92,3 +88,13 @@ mkdir -p $HOME/.local/script
 cp -r ./script/grim.sh $HOME/.local/script/grim.sh
 doas cp -r ./script/grim.desktop /usr/share/applications/grim.desktop
 cp -r ./config/kak $HOME/.config/
+
+doas apk add flatpak
+flatpak remote-add --user --subset=verified flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install --user -y flathub io.gitlab.librewolf-community
+mkdir -p $HOME/loads
+flatpak override --user --filesystem="$HOME/loads" io.gitlab.librewolf-community
+flatpak install --user -y flathub org.libreoffice.LibreOffice
+mkdir -p $HOME/docs
+flatpak override --user --nofilesystem=$HOME org.libreoffice.LibreOffice
+flatpak override --user --filesystem="$HOME/docs" org.libreoffice.LibreOffice
