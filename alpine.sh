@@ -2,7 +2,7 @@
 
 doas setup-devd udev
 
-doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-jetbrains-mono-nerd
+doas apk add -u make wayland font-terminus gcc libinput wlroots libxkbcommon wayland-protocols pkgconf foot wmenu j4-dmenu-desktop seatd htop mesa-dri-gallium linux-firmware kakoune kakoune-lsp swaybg font-jetbrains-mono-nerd
 doas apk add -t .dev wayland-dev libinput-dev wlroots-dev libxkbcommon-dev pkgconf-dev musl-dev patch fcft-dev
 
 if [ -z "$XDG_RUNTIME_DIR" ]; then
@@ -88,5 +88,7 @@ flatpak override --user --filesystem="$HOME/loads" io.gitlab.librewolf-community
 
 doas apk add grim imv ranger file
 mkdir -p $HOME/screen
+mkdir -p $HOME/.local/script
+cp -r ./script/grim.sh $HOME/.local/script/grim.sh
 doas cp -r ./script/grim.desktop /usr/share/applications/grim.desktop
 cp -r ./config/kak $HOME/.config/

@@ -2,5 +2,4 @@
 Type=Application
 Name=Grim
 Terminal=false
-Exec=grim "$HOME/screen/$(date "+%Y-%m-%d %H:%M:%S").png"
-
+Exec=sh -c "$HOME/.local/script/grim.sh"
