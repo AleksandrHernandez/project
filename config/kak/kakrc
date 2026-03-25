@@ -5,8 +5,6 @@ set-face global LineNumbers default,default
 set-face global StatusLine default,default
 add-highlighter global/number-lines number-lines -relative
 
-#set-option global ui_options ncurses_assistant=none
-
 #eval %sh{kak-lsp --kakoune -s $kak_session}
 #hook global WinSetOption filetype=(python|sh) %{
 #    lsp-enable-window
