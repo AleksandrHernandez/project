@@ -2,6 +2,7 @@ colorscheme gruvbox-dark
 set-face global Default default,default
 set-face global BufferPadding default,default
 set-face global LineNumbers default,default
+set-face global StatusLine default,default
 add-highlighter global/number-lines number-lines -relative
 
 #set-option global ui_options ncurses_assistant=none
